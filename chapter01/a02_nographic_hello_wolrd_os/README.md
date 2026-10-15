@@ -1,3 +1,17 @@
+# quem run & exit
+
+- To exit QEMU, press `Ctrl-A`, then `X`.
+
+```bash
+$ just qemu
+
+qemu-system-aarch64 -machine virt -cpu cortex-a57 -m 256M -nographic -kernel target/aarch64-unknown-none/debug/a02_nographic_hello_wolrd_os
+Hello World!
+QEMU: Terminated
+```
+
+<hr />
+
 - Your Rust code is a reasonable starting point for a bare-metal UART hello-world kernel, but you're right about the missing piece: you need a way to load and execute it.
 
 The important distinction is that your code is not a complete bootloader. It is a small freestanding program intended to run after something has initialized the machine and transferred control to `_start`.

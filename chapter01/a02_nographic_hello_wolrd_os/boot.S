@@ -1,4 +1,3 @@
-
 .section .text.boot, "ax"
 .global _start
 .type _start, %function
@@ -16,3 +15,4 @@ _start:
     b 1b
 
 .size _start, . - _start
+
