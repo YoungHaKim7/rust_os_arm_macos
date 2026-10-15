@@ -82,7 +82,7 @@ Hello World!
 
 Create the following files:
 
-```
+```bash
 rust-kernel/
 ├── Cargo.toml
 ├── linker.ld
@@ -95,7 +95,7 @@ rust-kernel/
 
 ### `Cargo.toml`
 
-```
+```toml
 
 [package]
 name = "rust-kernel"
@@ -112,8 +112,7 @@ panic = "abort"
 
 ### `.cargo/config.toml`
 
-```
-
+```toml
 [build]
 target = "aarch64-unknown-none"
 
@@ -121,15 +120,13 @@ target = "aarch64-unknown-none"
 rustflags = [
     "-C", "link-arg=-Tlinker.ld",
 ]
-
 ```
 
 This selects Rust's bare-metal AArch64 target instead of compiling a normal macOS or Linux application.
 
 ### `boot.S`
 
-```
-
+```asm
 .section .text.boot, "ax"
 .global _start
 .type _start, %function
@@ -154,7 +151,7 @@ This is the small assembly portion that Rust alone cannot safely replace without
 
 ### `linker.ld`
 
-```
+```ld
 
 ENTRY(_start)
 
@@ -195,7 +192,7 @@ The linker script determines where the kernel is placed in memory and tells the 
 
 ### `src/main.rs`
 
-```
+```rs
 
 #![no_std]
 #![no_main]
@@ -252,7 +249,7 @@ The kernel doesn't use `std`, an operating system, or a normal process entry poi
 
 On macOS with Apple Silicon, install QEMU and the Rust target:
 
-```
+```bash
 brew install qemu
 
 rustup target add aarch64-unknown-none
@@ -268,13 +265,13 @@ The rustc book
 
 Build the kernel from the project root:
 
-```
+```bash
 cargo build
 ```
 
 Then run it:
 
-```
+```bash
 qemu-system-aarch64 \
     -machine virt \
     -cpu cortex-a57 \
@@ -295,7 +292,7 @@ If compilation fails, check the actual linker output first. If the kernel boots 
 
 ## 4. Do you need GRUB or your own bootloader?
 
-It depends on your goal.
+- It depends on your goal.
 
 | Goal                                    | Recommended approach                                           |
 | --------------------------------------- | -------------------------------------------------------------- |
@@ -305,7 +302,7 @@ It depends on your goal.
 | Build an ARM64 OS                       | AArch64 startup assembly, firmware or a suitable bootloader    |
 | Boot from a disk image on real hardware | Firmware plus a bootloader and a properly formatted boot image |
 
-One important distinction: QEMU's `-kernel` option loads your ELF for you; it is not a portable bootloader that you can put on a physical machine. The startup code above also assumes QEMU's AArch64 execution environment and does not yet initialize every piece of processor state a production kernel would need.
+- One important distinction: QEMU's `-kernel` option loads your ELF for you; it is not a portable bootloader that you can put on a physical machine. The startup code above also assumes QEMU's AArch64 execution environment and does not yet initialize every piece of processor state a production kernel would need.
 
 For your next step, I recommend getting this minimal kernel running first, then adding a proper bootloader that loads the ELF and transfers control to `_start`. That way, when something goes wrong, you can distinguish a boot problem from a Rust compiler problem or a UART driver problem.
 
