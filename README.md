@@ -15,6 +15,24 @@ $ cargo rustc -- -C link-arg=--script=linker.ld
 $ cargo build
 ```
 
+# quem run & exit
+
+- To exit QEMU, press `Ctrl-A`, then `X`.
+
+```bash
+$ just qemu
+
+qemu-system-aarch64 \
+          -machine virt \
+          -cpu cortex-a57 \
+          -m 256M -nographic \
+          -kernel target/aarch64-unknown-none/debug/a02_nographic_hello_wolrd_os
+
+Hello World!
+QEMU: Terminated
+```
+
+
 # qemu
 
 ```bash
