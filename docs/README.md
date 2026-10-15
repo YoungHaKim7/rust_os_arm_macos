@@ -1,3 +1,9 @@
+# Writing an OS in Rust
+
+- https://os.phil-opp.com/
+
+- https://os.phil-opp.com/freestanding-rust-binary/
+
 # Creating an OS from Scratch(Rust)
 - https://youtube.com/playlist?list=PLDeRIkiONWGuF8TU5RD3RIUd3334cwanB&si=xu2ObkhF3y6Dmlr4
 
