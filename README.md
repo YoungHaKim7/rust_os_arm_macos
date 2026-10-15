@@ -25,3 +25,16 @@ $ qemu-system-aarch64 -machine virt -cpu cortex-a53 -kernel target/aarch64-unkno
 qemu-system-aarch64 -machine virt -cpu cortex-a53 -kernel target/aarch64-unknown-none/debug/rust_os_arm_macos -nographic
 ```
 
+
+- nographic
+
+```bash
+$ cargo build
+
+$ qemu-system-aarch64 \
+          -machine virt \
+          -cpu cortex-a57 \
+          -m 256M \
+          -nographic \
+          -kernel target/aarch64-unknown-none/debug/rust_os_arm_macos
+```
