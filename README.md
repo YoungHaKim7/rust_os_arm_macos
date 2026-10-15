@@ -25,7 +25,8 @@ $ just qemu
 qemu-system-aarch64 \
           -machine virt \
           -cpu cortex-a57 \
-          -m 256M -nographic \
+          -m 256M \
+          -nographic \
           -kernel target/aarch64-unknown-none/debug/a02_nographic_hello_wolrd_os
 
 Hello World!
