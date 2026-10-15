@@ -2,8 +2,14 @@
 name = "rust_os_arm_macos"
 version = "0.1.0"
 edition = "2024"
+rust-version = "1.99.0"
 
 [dependencies]
+
+# [lib]
+# "cdylib" produces the C-compatible dynamic library.
+# "rlib" is optionally included so you can still use it as a normal Rust dependency.
+#crate-type = ["cdylib", "rlib"]
 
 [profile.dev]
 panic= "abort"
