@@ -1,9 +1,9 @@
 #![no_std]
 #![no_main]
 
-use core::panic::PanicInfo;
+use core::{panic::PanicInfo, ptr};
 
-const UART: *mut u8 = 0x9000_0000 as *mut u8;
+const UART_BASE: *mut u8 = 0x9000_0000 as *mut u8;
 
 #[panic_handler]
 fn panic(_info: &PanicInfo) -> ! {
@@ -16,7 +16,7 @@ pub extern "C" fn _start() -> ! {
 
     for &byte in hello {
         unsafe {
-            *UART = byte;
+            ptr::write_volatile(UART_BASE, byte);
         }
     }
 
