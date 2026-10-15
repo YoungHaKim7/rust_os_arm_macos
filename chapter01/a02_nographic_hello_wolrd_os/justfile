@@ -1,3 +1,5 @@
+project_name := `basename "$(pwd)"`
+
 qemu:
     cargo build --target aarch64-unknown-none
     qemu-system-aarch64 \
@@ -5,6 +7,6 @@ qemu:
           -cpu cortex-a57 \
           -m 256M \
           -nographic \
-          -kernel target/aarch64-unknown-none/debug/a02_nographic_hello_wolrd_os
+          -kernel target/aarch64-unknown-none/debug/{{project_name}}
 
     
