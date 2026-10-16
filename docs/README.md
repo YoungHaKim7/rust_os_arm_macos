@@ -4,6 +4,10 @@
 
 - https://os.phil-opp.com/freestanding-rust-binary/
 
+# Official QEMU mirror.
+- https://github.com/qemu/qemu
+  - https://www.qemu.org/contribute/
+
 # Creating an OS from Scratch(Rust)
 - https://youtube.com/playlist?list=PLDeRIkiONWGuF8TU5RD3RIUd3334cwanB&si=xu2ObkhF3y6Dmlr4
 
