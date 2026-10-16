@@ -1,7 +1,11 @@
 project_name := `basename "$(pwd)"`
+target_machine := "aarch64-unknown-none"
 
 qemu:
-    cargo build --target aarch64-unknown-none
-    qemu-system-aarch64 -machine virt -cpu cortex-a53 -kernel target/aarch64-unknown-none/debug/{{project_name}}
+    cargo build --target {{target_machine}}
+    qemu-system-aarch64 \
+        -machine virt \
+        -cpu cortex-a53 \
+        -kernel target/{{target_machine}}/debug/{{project_name}}
 
     
