@@ -138,25 +138,29 @@ unsafe fn find_ramfb_selector() -> Option<u16> {
         }
 
         for i in 0..count {
+            uart_print("[fw_cfg] Entry ");
+            uart_hex(i);
+            uart_print("\r\n");
+
             let mut entry = [0u8; 64];
 
-            for byte in &mut entry {
+            // Test the first byte without printing beforehand.
+            entry[0] = fw_cfg_read_byte();
+
+            uart_print("[fw_cfg] First byte read: 0x");
+            uart_hex(entry[0] as u32);
+            uart_print("\r\n");
+
+            // Read the remaining 63 bytes.
+            for byte in &mut entry[1..] {
                 *byte = fw_cfg_read_byte();
             }
 
-            if i % 32 == 0 {
-                uart_print("[fw_cfg] Scanning entry ");
-                uart_hex(i);
-                uart_print("\r\n");
-            }
+            uart_print("[fw_cfg] Entry complete\r\n");
 
             if &entry[8..17] == b"etc/ramfb" {
                 let selector = u16::from_be_bytes([entry[4], entry[5]]);
-
-                uart_print("[fw_cfg] Found etc/ramfb, selector 0x");
-                uart_hex(selector as u32);
-                uart_print("\r\n");
-
+                uart_print("[fw_cfg] Found etc/ramfb\r\n");
                 return Some(selector);
             }
         }
