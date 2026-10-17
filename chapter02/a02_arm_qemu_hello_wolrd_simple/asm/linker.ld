@@ -2,33 +2,11 @@ ENTRY(_start)
 
 SECTIONS
 {
-    . = 0x40080000;
+    /* RAM on the QEMU "virt" board starts at 0x40000000 */
+    . = 0x40000000;
 
-    .text : ALIGN(4096) {
-        KEEP(*(.text.boot))
-        *(.text .text.*)
-    }
-
-    .rodata : ALIGN(4096) {
-        *(.rodata .rodata.*)
-    }
-
-    .data : ALIGN(4096) {
-        *(.data .data.*)
-    }
-
-    .bss (NOLOAD) : ALIGN(4096) {
-        *(.bss .bss.*)
-        *(COMMON)
-
-        . = ALIGN(16);
-        _stack_bottom = .;
-        . += 16384;
-        _stack_top = .;
-    }
-
-    /DISCARD/ : {
-        *(.eh_frame .eh_frame.*)
-    }
+    .text : { KEEP(*(.text.start)) *(.text*) }
+    .rodata : { *(.rodata*) }
+    .data : { *(.data*) }
+    .bss : { *(.bss*) *(COMMON) }
 }
-
