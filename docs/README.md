@@ -24,6 +24,9 @@
 # Creating an OS from Scratch(Rust)
 - https://youtube.com/playlist?list=PLDeRIkiONWGuF8TU5RD3RIUd3334cwanB&si=xu2ObkhF3y6Dmlr4
 
+- CPU 작동방법?
+  - https://cpu.land/
+
 <hr />
 
 # pintoOS만드는거 pdf 로 잘 정리됨
