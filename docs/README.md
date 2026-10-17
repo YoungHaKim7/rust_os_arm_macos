@@ -24,6 +24,9 @@
 # Creating an OS from Scratch(Rust)
 - https://youtube.com/playlist?list=PLDeRIkiONWGuF8TU5RD3RIUd3334cwanB&si=xu2ObkhF3y6Dmlr4
 
+- OSdev.
+  - https://wiki.osdev.org/Expanded_Main_Page
+
 - CPU 작동방법?
   - https://cpu.land/
 
