@@ -6,7 +6,11 @@ qemu:
     qemu-system-aarch64 \
         -machine virt \
         -cpu cortex-a53 \
-        -kernel target/{{target_machine}}/debug/{{project_name}}
+        -m 256M \
+        -kernel target/{{target_machine}}/debug/{{project_name}} \
+        -display cocoa \
+        -serial stdio \
+        -monitor none
 
     
 

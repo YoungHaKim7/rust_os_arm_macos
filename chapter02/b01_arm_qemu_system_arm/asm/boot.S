@@ -1,18 +1,15 @@
 .section .text.boot, "ax"
 .global _start
-.type _start, %function
 
 _start:
-    // Initialize the stack pointer.
+    // Initialize the stack.
     ldr x0, =_stack_top
     mov sp, x0
 
-    // Call the Rust kernel entry point.
+    // Enter the Rust kernel.
     bl rust_main
 
 1:
     wfe
     b 1b
-
-.size _start, . - _start
 

@@ -8,9 +8,18 @@
   - 러스트로 작은 OS만들기
   - https://github.com/phil-opp/blog_os/
 
+
+
+# Hello World with Bare Metal and QEMU
+
+- https://developer.arm.com/community/arm-community-blogs/b/architectures-and-processors-blog/posts/hello-world-with-bare-metal-and-qemu
+
 # Official QEMU mirror.
 - https://github.com/qemu/qemu
   - https://www.qemu.org/contribute/
+
+- Tutorial
+  - https://github.com/TunaCici/QEMU_Starter/blob/main/Documents/README_2_HelloWorld.md
 
 # Creating an OS from Scratch(Rust)
 - https://youtube.com/playlist?list=PLDeRIkiONWGuF8TU5RD3RIUd3334cwanB&si=xu2ObkhF3y6Dmlr4

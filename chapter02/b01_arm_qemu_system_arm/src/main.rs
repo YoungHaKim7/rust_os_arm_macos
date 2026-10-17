@@ -1,28 +1,41 @@
-// src/main.rs
-#![no_std] // don't link the Rust standard library
-#![no_main] // disable all Rust-level entry points
+#![no_std]
+#![no_main]
 
-use core::panic::PanicInfo;
+use core::{
+    panic::PanicInfo,
+    ptr::{read_volatile, write_volatile},
+};
 
-static HELLO: &[u8] = b"Hello World!";
+const UART0_DR: *mut u32 = 0x0900_0000 as *mut u32;
+const UART0_FR: *const u32 = 0x0900_0018 as *const u32;
 
-/// This function is called on panic
+const UART_FR_TXFF: u32 = 1 << 5;
+
 #[panic_handler]
 fn panic(_info: &PanicInfo) -> ! {
-    loop {}
+    loop {
+        core::hint::spin_loop();
+    }
 }
 
-#[unsafe(no_mangle)] // don't mangle the name of this function
-pub extern "C" fn _start() -> ! {
-    // this function is the entry point, since the linker looks for a function
-    // named '_start' by default
-    let vga_buffer = 0xb8000 as *mut u8;
+#[unsafe(no_mangle)]
+pub extern "C" fn rust_main() -> ! {
+    let message = b"Hello World!\r\n";
 
-    for (i, &byte) in HELLO.iter().enumerate() {
+    for &byte in message {
         unsafe {
-            *vga_buffer.offset(i as isize * 2) = byte;
-            *vga_buffer.offset(i as isize * 2 + 1) = 0xb;
+            // Wait until the transmit FIFO is not full.
+            while (read_volatile(UART0_FR) & UART_FR_TXFF) != 0 {
+                core::hint::spin_loop();
+            }
+
+            // Write one character to the UART data register.
+            write_volatile(UART0_DR, byte as u32);
         }
     }
-    loop {}
+
+    // Keep the kernel running.
+    loop {
+        core::hint::spin_loop();
+    }
 }
