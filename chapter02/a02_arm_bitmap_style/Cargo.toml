@@ -1,5 +1,5 @@
 [package]
-name = "a02_arm_qemu_hello_wolrd_simple"
+name = "a02_arm_bitmap_style"
 version = "0.1.0"
 edition = "2024"
 
@@ -10,3 +10,4 @@ panic= "abort"
 
 [profile.release]
 panic = "abort"
+
