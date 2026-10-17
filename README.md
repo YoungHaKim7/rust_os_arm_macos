@@ -33,6 +33,10 @@ Hello World!
 QEMU: Terminated
 ```
 
+# quem command 진입
+
+- To exit QEMU, press `Ctrl-A`, then `C`.
+
 
 # qemu
 
