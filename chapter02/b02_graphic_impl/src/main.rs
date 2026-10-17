@@ -91,27 +91,77 @@ unsafe fn fw_cfg_read_byte() -> u8 {
 // Locate the selector for QEMU's "etc/ramfb" item.
 unsafe fn find_ramfb_selector() -> Option<u16> {
     unsafe {
+        // Test whether the fw_cfg device responds.
+        uart_print("[fw_cfg] Selecting signature...\r\n");
+        fw_cfg_select(0x0000);
+
+        uart_print("[fw_cfg] Reading signature...\r\n");
+
+        let mut signature = [0u8; 4];
+
+        for byte in &mut signature {
+            *byte = fw_cfg_read_byte();
+        }
+
+        uart_print("[fw_cfg] Signature: ");
+
+        for byte in signature {
+            uart_putc(byte);
+        }
+
+        uart_print("\r\n");
+
+        if signature != *b"QEMU" {
+            uart_print("[fw_cfg] ERROR: invalid signature\r\n");
+            return None;
+        }
+
+        // Read the file directory header.
+        uart_print("[fw_cfg] Selecting file directory...\r\n");
         fw_cfg_select(FW_CFG_FILE_DIR);
 
         let mut header = [0u8; 4];
+
         for byte in &mut header {
             *byte = fw_cfg_read_byte();
         }
 
-        let count = u32::from_be_bytes(header).min(4096);
+        let count = u32::from_be_bytes(header);
 
-        for _ in 0..count {
+        uart_print("[fw_cfg] Directory entries: 0x");
+        uart_hex(count);
+        uart_print("\r\n");
+
+        if count > 4096 {
+            uart_print("[fw_cfg] ERROR: unreasonable entry count\r\n");
+            return None;
+        }
+
+        for i in 0..count {
             let mut entry = [0u8; 64];
 
             for byte in &mut entry {
                 *byte = fw_cfg_read_byte();
             }
 
+            if i % 32 == 0 {
+                uart_print("[fw_cfg] Scanning entry ");
+                uart_hex(i);
+                uart_print("\r\n");
+            }
+
             if &entry[8..17] == b"etc/ramfb" {
-                return Some(u16::from_be_bytes([entry[4], entry[5]]));
+                let selector = u16::from_be_bytes([entry[4], entry[5]]);
+
+                uart_print("[fw_cfg] Found etc/ramfb, selector 0x");
+                uart_hex(selector as u32);
+                uart_print("\r\n");
+
+                return Some(selector);
             }
         }
 
+        uart_print("[fw_cfg] ERROR: etc/ramfb not found\r\n");
         None
     }
 }
@@ -225,14 +275,20 @@ fn draw_screen() {
 }
 
 fn configure_framebuffer() -> bool {
+    uart_print("[ramfb] Searching fw_cfg directory...\r\n");
+
     let selector = unsafe { find_ramfb_selector() };
 
     let Some(selector) = selector else {
-        uart_print("ERROR: etc/ramfb not found\r\n");
+        uart_print("[ramfb] ERROR: etc/ramfb not found\r\n");
         return false;
     };
 
+    uart_print("[ramfb] Found etc/ramfb\r\n");
+
     let framebuffer_address = addr_of_mut!(FRAMEBUFFER) as *mut u32 as u64;
+
+    uart_print("[ramfb] Preparing configuration...\r\n");
 
     let config = RamfbConfig {
         address: framebuffer_address.to_be(),
@@ -243,6 +299,8 @@ fn configure_framebuffer() -> bool {
         stride: STRIDE.to_be(),
     };
 
+    uart_print("[ramfb] Starting DMA write...\r\n");
+
     let success = unsafe {
         fw_cfg_dma_write(
             selector,
@@ -251,11 +309,24 @@ fn configure_framebuffer() -> bool {
         )
     };
 
+    uart_print("[ramfb] DMA write returned\r\n");
+
     if !success {
-        uart_print("ERROR: ramfb DMA configuration failed\r\n");
+        uart_print("[ramfb] ERROR: DMA configuration failed\r\n");
+        return false;
     }
 
-    success
+    uart_print("[ramfb] Configuration successful\r\n");
+    true
+}
+
+fn uart_hex(value: u32) {
+    const HEX: &[u8; 16] = b"0123456789ABCDEF";
+
+    for shift in [28, 24, 20, 16, 12, 8, 4, 0] {
+        let digit = ((value >> shift) & 0xF) as usize;
+        uart_putc(HEX[digit]);
+    }
 }
 
 #[unsafe(no_mangle)]

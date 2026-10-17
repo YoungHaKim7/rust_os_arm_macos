@@ -7,8 +7,8 @@ qemu:
         -machine virt \
         -cpu cortex-a53 \
         -m 256M \
-        -kernel target/{{target_machine}}/debug/{{project_name}} \
         -device ramfb \
+        -kernel target/{{target_machine}}/debug/{{project_name}} \
         -display cocoa \
         -serial stdio \
         -monitor none
