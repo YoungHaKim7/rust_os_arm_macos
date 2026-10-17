@@ -3,3 +3,6 @@
 
 ### Interrupt descriptor table
 - https://en.wikipedia.org/wiki/Interrupt_descriptor_table
+
+# Interrupt Handling on x86_64
+- https://github.com/dreamportdev/Osdev-Notes/blob/master/02_Architecture/05_InterruptHandling.md

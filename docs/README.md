@@ -8,6 +8,9 @@
   - 러스트로 작은 OS만들기
   - https://github.com/phil-opp/blog_os/
 
+# OS dev note
+- https://github.com/dreamportdev/Osdev-Notes
+- https://codeberg.org/dreamportdev/Osdev-Notes
 
 
 # Hello World with Bare Metal and QEMU
