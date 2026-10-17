@@ -22,6 +22,7 @@ SECTIONS
         *(COMMON)
 
         . = ALIGN(16);
+        _stack_bottom = .;
         . += 16384;
         _stack_top = .;
     }
