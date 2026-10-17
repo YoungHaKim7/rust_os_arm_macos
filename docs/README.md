@@ -4,6 +4,10 @@
 
 - https://os.phil-opp.com/freestanding-rust-binary/
 
+- code
+  - 러스트로 작은 OS만들기
+  - https://github.com/phil-opp/blog_os/
+
 # Official QEMU mirror.
 - https://github.com/qemu/qemu
   - https://www.qemu.org/contribute/
