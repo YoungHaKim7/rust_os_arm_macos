@@ -1,3 +1,8 @@
+# 여기에 다시 정리중(261018)
+- https://github.com/YoungHaKim7/rust_os_x86_64
+
+<hr />
+
 # 완성된 코드 x86_64 OS(Rust로 만든거)
 
 - https://github.com/phil-opp/blog_os/tree/post-12
