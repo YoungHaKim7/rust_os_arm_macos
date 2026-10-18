@@ -7,3 +7,6 @@
 
 # 누가 만들고 있는거 os.phil보다 더 업그레이드 버젼
 - https://github.com/RustOS-Dev/RustOS
+
+# basic-os
+- https://github.com/rust-osdev/bootloader/blob/main/examples/basic/basic-os.md
