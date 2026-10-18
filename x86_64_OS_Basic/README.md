@@ -4,3 +4,6 @@
 
 # Writing an OS in Rust
 - https://os.phil-opp.com/
+
+# 누가 만들고 있는거 os.phil보다 더 업그레이드 버젼
+- https://github.com/RustOS-Dev/RustOS
