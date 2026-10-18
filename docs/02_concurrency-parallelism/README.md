@@ -25,5 +25,5 @@
 - futex예시 코드(c언어)
   - https://codeberg.org/crashoverride/mutex
 
-- 러스크에서 구현한 futex
+- 러스트(Rust)에서 구현한 futex
   - https://doc.rust-lang.org/nightly/src/std/sys/sync/thread_parking/futex.rs.html
