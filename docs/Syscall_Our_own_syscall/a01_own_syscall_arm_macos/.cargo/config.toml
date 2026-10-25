@@ -1,0 +1,12 @@
+[target.aarch64-apple-darwin]
+rustflags = [
+    # Skip the C runtime startup files (crt), which would normally call `main`
+    # and then libc `exit` — our own `_start` in asm/start.s is the entry point
+    # and issues the raw exit syscall itself.
+    "-C", "link-arg=-nostartfiles",
+    "-C", "link-arg=-Wl,-e,_start",
+    # ld refuses to link a dynamic executable without libSystem, so it is
+    # linked and mapped by dyld — but the program never calls into it:
+    # every syscall goes through our own `svc 0x80` wrappers.
+    "-C", "link-arg=-lSystem",
+]

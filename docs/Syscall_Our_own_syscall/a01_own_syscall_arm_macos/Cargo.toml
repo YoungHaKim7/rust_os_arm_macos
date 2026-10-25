@@ -1,0 +1,13 @@
+[package]
+name = "a01_own_syscall_arm_macos"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+
+# no_std binaries on the host target cannot unwind panics.
+[profile.dev]
+panic = "abort"
+
+[profile.release]
+panic = "abort"
