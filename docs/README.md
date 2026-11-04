@@ -33,6 +33,9 @@
 - CPU 작동방법?
   - https://cpu.land/
 
+- Ibex is a small 32-bit RISC-V CPU core with high-level of verification (previously known as zero-riscy)
+  - https://github.com/lowRISC/ibex
+
 <hr />
 
 # pintoOS만드는거 pdf 로 잘 정리됨
