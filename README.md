@@ -5,8 +5,17 @@
 $ brew install arm-none-eabi-gcc qemu
 ```
 
-# build
+# target Hardware
+- https://docs.rust-embedded.org/book/start/hardware.html
+```toml
+# Pick ONE of these compilation targets
+# target = "thumbv6m-none-eabi"    # Cortex-M0 and Cortex-M0+
+# target = "thumbv7m-none-eabi"    # Cortex-M3
+# target = "thumbv7em-none-eabi"   # Cortex-M4 and Cortex-M7 (no FPU)
+target = "thumbv7em-none-eabihf" # Cortex-M4F and Cortex-M7F (with FPU)
+```
 
+# build
 
 ```bash
 $ cargo rustc -- -C link-arg=--script=linker.ld
